@@ -7,7 +7,7 @@ function Selection_Sort(arr) {
                 min_index = l;
             }
         }
-        [arr[min_index], arr[i]] = [arr[i], arr[min_index]]
+        [arr[min_index], arr[i]] = [arr[i], arr[min_index]];
     }
     return arr
 }
