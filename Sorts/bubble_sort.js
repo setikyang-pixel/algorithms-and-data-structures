@@ -1,4 +1,5 @@
 function Buble_Sort(arr) {
+  if (arr.length == 1) return arr;
   let n = arr.length;
   let flag;
   do {
