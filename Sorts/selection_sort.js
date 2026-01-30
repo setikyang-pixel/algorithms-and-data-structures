@@ -1,15 +1,16 @@
 function Selection_Sort(arr) {
   if (arr.length == 1) return arr;
   let n = arr.length;
-  for (let i = 0; i < n - 1; i++) {
-    let min_index = i;
-    for (let l = i + 1; l < n; l++) {
-      if (arr[min_index] > arr[l]) {
-        min_index = l;
+  let flag;
+  do {
+    flag = false;
+    for (let j = 0; j < n; j++) {
+      if (arr[j] > arr[j + 1]) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+        flag = true;
       }
     }
-    [arr[min_index], arr[i]] = [arr[i], arr[min_index]];
-  }
+  } while (flag);
   return arr;
 }
 
