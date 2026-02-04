@@ -24,3 +24,5 @@ function Quick(arr, low = 0, high = arr.length - 1) {
 let arr = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 Quick(arr);
 console.log(arr);
+
+module.exports = Quick;
