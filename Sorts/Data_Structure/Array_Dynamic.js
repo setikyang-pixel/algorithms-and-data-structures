@@ -75,12 +75,7 @@ class DynamicArray {
       this.#capacity *= 2;
       this.reserve(this.#capacity);
     }
-    for (let i = 0; i < this.#capacity; i++) {
-      if (this.#arr[i] == 0) {
-        this.#arr[i] = value;
-        break;
-      }
-    }
+    this.#arr[this.#size++] = value;
   }
   popBack() {
     if (this.empty()) throw new Error("Array is empty");
@@ -262,3 +257,4 @@ class DynamicArray {
 }
 
 let a = new DynamicArray(7);
+
