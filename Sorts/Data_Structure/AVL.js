@@ -374,15 +374,10 @@ class AVL {
   }
 *values(cur = this.#root) {
     if (!cur) return;
-
-    // ՓՈՓՈԽՈՒԹՅՈՒՆ. Ստուգում ենք՝ արդյոք ձախ կողմը կա
     if (cur.left) {
         yield* this.values(cur.left);
     }
-
     yield cur.val;
-
-    // ՓՈՓՈԽՈՒԹՅՈՒՆ. Ստուգում ենք՝ արդյոք աջ կողմը կա
     if (cur.right) {
         yield* this.values(cur.right);
     }
