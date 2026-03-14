@@ -233,7 +233,7 @@ class AVL {
   }
 
   #getHeight(node) {
-    if (!node) return;
+    if (!node) return 0;
     return node.height ? node.height : 0;
   }
 

@@ -10,7 +10,8 @@ function InsertionSort(arr) {
     }
     arr[j + 1] = key;
   }
-  return arr;
 }
 
-console.log(InsertionSort([10, 9, 8, 7, 6, 5, 4, 3, 2, 1]));
+let arr = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+InsertionSort(arr)
+console.log(arr);

@@ -124,7 +124,9 @@ class DynamicArray {
   }
 
   *values() {
-    yield* this.#arr;
+    for (let i = 0; i < this.#size; i++) {
+      yield this.#arr[i];
+    }
   }
 
   *keys() {
@@ -257,4 +259,3 @@ class DynamicArray {
 }
 
 let a = new DynamicArray(7);
-

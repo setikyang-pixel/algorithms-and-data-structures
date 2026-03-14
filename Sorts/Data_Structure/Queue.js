@@ -47,21 +47,21 @@ class Queue {
 
   enqueue(value) {
     if (this.#size === this.#cap) throw new Error("Overflow");
-    this.#queue[this.#front++] = value;
+    this.#queue[++this.#back] = value;
     this.#size++;
   }
 
   dequeue() {
-    if (this.is_empty()) throw new Error("Error");
-    let value = this.#queue[this.#back + 1];
-    this.#queue[this.#back + 1] = undefined;
-    this.#back++;
-    this.#size++;
+    if (this.#size === 0) throw new Error("Empty");
+    let value = this.#queue[this.#front];
+    this.#queue[this.#front] = undefined;
+    this.#front++;
+    this.#size--;
     return value;
   }
 
   peek() {
-    return this.#queue[this.#back] ? this.#queue[this.#back] : null;
+    return this.#size === 0 ? null : this.#queue[this.#front];
   }
 
   back() {
@@ -69,12 +69,23 @@ class Queue {
   }
 
   print() {
-    let arr = new Array(this.#size);
-    for (let i = this.#back + 1; i < this.#size; i++) {
-      arr[i] = this.#queue[i];
+    let arr = [];
+    for (let i = this.#front; i <= this.#back; i++) {
+      arr.push(this.#queue[i]);
     }
     return arr;
   }
 }
 
 let queue = new Queue(8);
+queue.enqueue(12);
+queue.enqueue(1);
+queue.enqueue(2);
+queue.enqueue(22);
+queue.enqueue(32);
+queue.enqueue(42);
+console.log(queue.print());
+queue.dequeue();
+queue.dequeue();
+queue.dequeue();
+console.log(queue.print());
