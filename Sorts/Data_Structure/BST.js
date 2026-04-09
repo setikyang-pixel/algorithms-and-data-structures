@@ -336,7 +336,8 @@ class BST {
     } else if (node.val < v) {
       node.right = this.#_delete(node.right, v);
     } else {
-      if (!node.left || !node.right) return node.left || node.right;
+      if (!node.left) return node.right;
+      if (!node.right) return node.left;
       let min = this.find_min(node.right);
       node.val = min.val;
       node.right = this.#_delete(node.right, min.val);
@@ -347,13 +348,13 @@ class BST {
   #_find_min(node) {
     if (!node) return;
     if (node.left) return (node.left = this.#_find_min(node.left));
-    return node.val;
+    return node;
   }
 
   #_find_max(node) {
     if (!node) return;
     if (node.right) node.right = this.#_find_max(node.right);
-    return node.val;
+    return node;
   }
   #_get_height(node) {
     if (!node) return 0;

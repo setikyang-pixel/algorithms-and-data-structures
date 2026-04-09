@@ -34,14 +34,14 @@ class AVL {
   /* ================= Core AVL Operations ================= */
 
   insert(value) {
-    if(!this.#root) {
-        this.#root = value !== undefined ? new Node(value) : null;
-        return;
+    if (!this.#root) {
+      this.#root = value !== undefined ? new Node(value) : null;
+      return;
     }
     if (value == null || value == undefined)
       throw new Error("Invalid Arguments");
     this.#size++;
-    return this.#root = this.#insert(this.#root, value);
+    return (this.#root = this.#insert(this.#root, value));
   }
 
   delete(value) {
@@ -149,7 +149,7 @@ class AVL {
       if (node.left) stack.push(node.left);
       if (node.right) stack.push(node.right);
     }
-    return res;
+    return res.reverse();
   }
 
   /* ================= AVL Balancing ================= */
@@ -172,7 +172,7 @@ class AVL {
     }
     this.#update(node);
     this.#reBalance(node);
-    return node
+    return node;
   }
 
   #delete(node, val) {
@@ -181,9 +181,9 @@ class AVL {
       node.left = this.#delete(node.left, val);
     } else if (node.val < val) {
       node.right = this.#delete(node.right, val);
-    } else {  
-        if(!node.left) return node.right
-        if(!node.right) return node.left;      
+    } else {
+      if (!node.left) return node.right;
+      if (!node.right) return node.left;
       let min = this.#getMin(node.right);
       node.val = min.val;
       node.right = this.#delete(node.right, min.val);
@@ -204,9 +204,8 @@ class AVL {
         node.right = this.#rotateRight(node.right);
       }
       return this.#rotateLeft(node);
-    } 
-      return node;
-    
+    }
+    return node;
   }
   #bf(node) {
     return this.#getHeight(node.left) - this.#getHeight(node.right);
@@ -372,14 +371,14 @@ class AVL {
       },
     };
   }
-*values(cur = this.#root) {
+  *values(cur = this.#root) {
     if (!cur) return;
     if (cur.left) {
-        yield* this.values(cur.left);
+      yield* this.values(cur.left);
     }
     yield cur.val;
     if (cur.right) {
-        yield* this.values(cur.right);
+      yield* this.values(cur.right);
     }
   }
   *entries(root = this.#root, index = { i: 0 }) {
@@ -387,7 +386,6 @@ class AVL {
     yield* this.entries(root.left, index);
     yield [index.i++, root.val];
     yield* this.entries(root.right, index);
-
   }
 }
 

@@ -184,10 +184,9 @@ class DynamicArray {
     for (let i = 0; i < this.#size; i++) {
       if (fn(this.#arr[i], i, this)) {
         return true;
-      } else {
-        return false;
       }
     }
+    return false;
   }
 
   every(fn) {

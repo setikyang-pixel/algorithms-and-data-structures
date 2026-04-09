@@ -11,10 +11,6 @@ class Deque {
   }
 
   /* ================= Basic State ================= */
-  get array() {
-    return this.#arr;
-  }
-
   size() {
     return this.#size;
   }
@@ -34,7 +30,7 @@ class Deque {
   /* ================= Internal Helpers ================= */
 
   #mod(i) {
-    return ((i % this.cap) + this.cap) % this.cap;
+    return i % this.cap;
   }
 
   #index(i) {
@@ -76,34 +72,34 @@ class Deque {
 
   push_back(value) {
     if (this.cap == this.#size) this.#ensureCapacityForOneMore();
-    let s = this.#mod(this.#front + this.#size);
-    this.#arr[s] = value;
+    let idx = this.#mod(this.#front + this.#size);
+    this.#arr[idx] = value;
     this.#size++;
   }
 
   push_front(value) {
-    if (this.cap < 0) this.#ensureCapacityForOneMore();
-    this.#front = this.#mod(this.#front - 1);
-    this.#arr[this.#front] = value;
+    if (this.cap === this.#size) this.#ensureCapacityForOneMore();
+    let idx = this.#mod(this.#front - 1 + this.cap);
+    this.#arr[idx] = value;
     this.#size++;
   }
 
   pop_front() {
     if (this.empty()) throw new Error("Invalid index");
-    let val = this.#arr[this.#front];
-    this.#front = this.#mod(this.#front - 1);
-    this.#front = undefined;
+    let idx = this.#mod(this.#front + 1);
+    let val = this.#arr[idx];
+    this.#arr[idx] = undefined;
     this.#size--;
     return val;
   }
 
   pop_back() {
     if (this.empty()) throw new Error("Deque is empty");
-    const idx = this.#index(this.#size - 1);
-    const value = this.#arr[idx];
+    let idx = this.#mod(this.#front + this.#size - 1)
+    let val = this.#arr[idx];
     this.#arr[idx] = undefined;
     this.#size--;
-    return value;
+    return val;
   }
 
   clear() {
@@ -148,12 +144,11 @@ class Deque {
   }
 
   swap(i, j) {
-    if (i || j) throw new Error("Invalid i / j");
-    let ind = this.#index(i);
-    let jnd = (this.#index(j)[(this.#arr[ind], this.#arr[jnd])] = [
-      this.#arr[jnd],
-      this.#arr[ind],
-    ]);
+    if (i < 0 || j < 0 || i >= this.#size || j >= this.#size)
+      throw new Error("Invalid index");
+    const a = this.#index(i);
+    const b = this.#index(j);
+    [this.#arr[a], this.#arr[b]] = [this.#arr[b], this.#arr[a]];
   }
 
   /* ================= Search & Utilities ================= */
@@ -249,7 +244,7 @@ class Deque {
     for (let i = 0; i < this.#size; i++) {
       let val = this.at(i);
       if (fn(val, i, this)) {
-        res.push(fn(val));
+        res.push(val);
       }
     }
     return res;
@@ -263,7 +258,7 @@ class Deque {
       start = 1;
     }
     for (let i = start; i < this.#size; i++) {
-      acum = fn(this.at(i), i, this);
+      acum = fn(acum, this.at(i), i, this);
     }
     return acum;
   }

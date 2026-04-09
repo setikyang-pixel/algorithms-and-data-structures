@@ -109,7 +109,7 @@ class SinglyLinkedList {
     if (!this.#head) throw new Error("is not initsilization");
     let remove = this.#head;
     this.#head = remove.next;
-    return this.#head;
+    return remove;
   }
 
   pop_back() {
@@ -217,20 +217,14 @@ class SinglyLinkedList {
 
     const mergeSort = (head) => {
       if (!head || !head.next) return head;
-
-      // ==== SPLIT (slow / fast) ====
       let slow = head;
       let fast = head.next;
-
       while (fast && fast.next) {
         slow = slow.next;
         fast = fast.next.next;
       }
-
       let mid = slow.next;
-      slow.next = null; // cut
-
-      // ==== RECURSION ====
+      slow.next = null; 
       let left = mergeSort(head);
       let right = mergeSort(mid);
 
