@@ -1,0 +1,8 @@
+.hallo{
+  border: 2px solid black;
+  
+}
+.hallo > img{
+  width: 100px;
+  height: 100px;
+}
